@@ -20,7 +20,16 @@ const resolvers = {
   }
 }
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ 
+  typeDefs, 
+  resolvers,
+  playground: {
+    endpoint: `http://${HOST}:${PORT}/graphql`,
+    settings: {
+      'editor.theme': 'light'
+    }
+  }
+});
 
 //Mount a jwt or other authentication middleware that is run before the GraphQL execution
 // app.use(path, jwtCheck);
@@ -29,5 +38,5 @@ server.applyMiddleware({ app });
 
 
 app.listen(PORT, () => {
-  console.log(`Go to http://${HOST}:${PORT}/graphiql to run queries!`)
+  console.log(`Go to http://${HOST}:${PORT}/graphql to run queries!`)
 })
