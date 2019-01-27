@@ -1,11 +1,17 @@
 {
   "name": "server",
   "version": "0.1.0",
+  "description": "/* */",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "db:create": "run.env createdb pinapp",
+    "db:migrate": "run.env knex migrate:latest"
+  },
   "dependencies": {
     "apollo-server-express": "^2.3.1",
-    "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "graphql": "^14.1.1",
@@ -14,6 +20,7 @@
     "pg": "^7.8.0"
   },
   "devDependencies": {
+    "nodemon": "^1.18.9",
     "run.env": "^1.1.0"
   }
 }
