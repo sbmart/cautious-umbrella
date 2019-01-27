@@ -2,19 +2,19 @@ version: 2
 jobs:
   build:
     docker:
-      - image: ubuntu:14.04
+      - image: ubuntu:18.10
 
-      - image: mongo:2.6.8
-        command: [mongod, --smallfiles]
+      # - image: mongo:2.6.8
+        # command: [mongod, --smallfiles]
 
-      - image: postgres:9.4.1
+      - image: postgres:11.1
         # some containers require setting environment variables
         environment:
           POSTGRES_USER: root
 
-      - image: redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673
+      # - image: redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673
 
-      - image: rabbitmq:3.5.4
+      # - image: rabbitmq:3.5.4
 
     environment:
       TEST_REPORTS: /tmp/test-reports
