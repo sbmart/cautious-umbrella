@@ -70,7 +70,7 @@ jobs:
 
   deploy-stage:
     docker:
-      - image: ubuntu:14.04
+      - image: ubuntu:18.10
     working_directory: /tmp/my-project
     steps:
       - run:
@@ -79,7 +79,7 @@ jobs:
 
   deploy-prod:
     docker:
-      - image: ubuntu:14.04
+      - image: ubuntu:18.10
     working_directory: /tmp/my-project
     steps:
       - run:
