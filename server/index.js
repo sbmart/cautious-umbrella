@@ -1,20 +1,16 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express')
-const { makeExecutableSchema } = require('graphql-tools')
-const { execute, subscribe } = require('graphql')
-const { createServer } = require('http')
-
+const { ApolloServer, gql } = require('apollo-server-express')
 const database = require('./database')
 
 const PORT = process.env.PORT || 3000
 const HOST = process.env.HOST || 'localhost'
 
-const typeDefs = `
+const app = express()
+
+const typeDefs = gql `
   type Pin { title: String!, link: String!, image: String!, id: Int! }
   type Query { pins: [Pin] }
 `
-
 const resolvers = {
   Query: {
     pins: async () => {
@@ -24,22 +20,14 @@ const resolvers = {
   }
 }
 
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-})
-const server = express()
+const server = new ApolloServer({ typeDefs, resolvers });
 
-server.use('/graphql', bodyParser.json(), graphqlExpress({ schema }))
+//Mount a jwt or other authentication middleware that is run before the GraphQL execution
+// app.use(path, jwtCheck);
 
-server.use(
-  '/graphiql',
-  graphiqlExpress({
-    endpointURL: '/graphql',
-    subscriptionsEndpoint: `ws://${HOST}:${PORT}/subscriptions`,
-  })
-)
+server.applyMiddleware({ app });
 
-server.listen(PORT, () => {
+
+app.listen(PORT, () => {
   console.log(`Go to http://${HOST}:${PORT}/graphiql to run queries!`)
 })
